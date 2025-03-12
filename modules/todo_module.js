@@ -10,8 +10,11 @@ todoSchema = mongoose.Schema({
         required:true,
     },
     status:{
-        type:boolean,
+        type:Boolean,
         required:true,
+    },UserId:{
+        type:mongoose.Types.ObjectId,
+        ref : "User"
     }
 });
 
