@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const { describe } = require('node:test');
-const { boolean } = require('webidl-conversions');
+
 todoSchema = mongoose.Schema({
     title:{
         type:String,
@@ -13,5 +12,7 @@ todoSchema = mongoose.Schema({
     status:{
         type:boolean,
         required:true,
-    },
-})
+    }
+});
+
+module.expots = mongoose.model('Todo',todoSchema);
