@@ -51,7 +51,7 @@ async function login(req,res){
     }
 }
 
-function authMid(req,res,next){
+function authenMid(req,res,next){
     const token = req.cookies.token;
     console.log("hellp")
     if(token){
@@ -75,4 +75,4 @@ function authMid(req,res,next){
 // router.post('/login',)
 // router.post('/signout',)
 
-module.exports = {signup,login,authMid}
+module.exports = {signup,login,authenMid}
