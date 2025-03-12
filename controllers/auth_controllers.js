@@ -53,7 +53,6 @@ async function login(req,res){
 
 function authenMid(req,res,next){
     const token = req.cookies.token;
-    console.log("hellp")
     if(token){
         jwt.verify(token,"my secret",(err,decodedToken)=>{
             if(err){
@@ -72,7 +71,35 @@ function authenMid(req,res,next){
 }
 
 
+
+async function verifyUser(req,res,next){
+    token = req.cookies.token;
+    let id = 0;
+    console.log(token)
+    if(!token){
+        res.status(401).json({"msg":"unauthorized access"});
+    }else{
+        jwt.verify(token,"my secret",(err,decodedToken)=>{
+            if(err){
+                console.log(err.message);
+                res.status(401).json({"msg":"unauthorized access"});
+            }else{
+                console.log(decodedToken)
+                 id = decodedToken.id;
+            }
+        })
+    }
+    console.log("before finding by id")
+    const user = await Users.findById(id);
+    if(!user){
+        res.status(404).json({"msg":"user not found"})
+    }else{
+        req.user = user;
+        next();
+    }
+}
+
 // router.post('/login',)
 // router.post('/signout',)
 
-module.exports = {signup,login,authenMid}
+module.exports = {signup,login,authenMid,verifyUser}
