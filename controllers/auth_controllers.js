@@ -70,8 +70,6 @@ function authenMid(req,res,next){
     }
 }
 
-
-
 async function verifyUser(req,res,next){
     token = req.cookies.token;
     let id = 0;
@@ -99,7 +97,13 @@ async function verifyUser(req,res,next){
     }
 }
 
-// router.post('/login',)
+function logout(req,res){
+    res.cookie('token',"",{httpOnly:true, maxAge:1});
+    res.status(204).json({
+        "success": true,
+        "message": "User signed out successfully"
+      })
+}
 // router.post('/signout',)
 
-module.exports = {signup,login,authenMid,verifyUser}
+module.exports = {signup,login,authenMid,verifyUser,logout}

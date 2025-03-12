@@ -14,4 +14,5 @@ app.use(express.json());
 
 app.post('/signup',auth.signup);
 app.post('/signin',auth.login);
+app.post('/signout',auth.logout);
 app.post('/add-todo',auth.authenMid,auth.verifyUser,(req,res)=>{console.log("welcome to the to-do page");res.send("done")})
