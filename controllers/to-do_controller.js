@@ -63,6 +63,35 @@ async function deleteTodo(req,res){
                 "success": true,
                 "message": "Todo deleted successfully"
               })
+        }else{s
+            res.status(401).send({
+                message:"unauthorized access"
+            })
+        }
+    }else{
+        res.status(404).send({
+            message:"task not found",
+        })
+    }
+}
+
+
+async function retrieveTodo (req,res){
+    const id = req.params.id
+    const task = await Todo.findById(id)
+    if(task){
+        if(task.UserId == req.id){
+            res.status(200).send({
+                    "success": true,
+                    "todo": {
+                      "id": task._id,
+                      "title": task.title,
+                      "description": task.description,
+                      "status": task.status,
+                      "userId": task.UserId
+                    }
+                  
+              })
         }else{
             res.status(401).send({
                 message:"unauthorized access"
@@ -74,4 +103,4 @@ async function deleteTodo(req,res){
         })
     }
 }
-module.exports = {add,UpdateTodo,deleteTodo}
+module.exports = {add,UpdateTodo,deleteTodo,retrieveTodo}

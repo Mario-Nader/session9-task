@@ -18,3 +18,4 @@ app.post('/signout',auth.logout);
 app.post('/add-todo',auth.authenMid,auth.verifyUser,todo_controller.add)
 app.put('/change-status/:id',auth.authenMid,auth.verifyUser,todo_controller.UpdateTodo)
 app.delete('/delete-todo/:id',auth.authenMid,auth.verifyUser,todo_controller.deleteTodo)
+app.get('/getById/:id',auth.authenMid,auth.verifyUser,todo_controller.retrieveTodo)
