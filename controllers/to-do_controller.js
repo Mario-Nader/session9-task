@@ -51,4 +51,27 @@ async function UpdateTodo(req,res){
     }
 }
 
-module.exports = {add,UpdateTodo}
+async function deleteTodo(req,res){
+    const id = req.params.id;
+    console.log(id)
+    const task = await Todo.findById(id)
+    console.log(task)
+    if(task){
+        if(task.UserId == req.id){
+            await Todo.deleteOne({_id: id})
+            res.status(204).send({
+                "success": true,
+                "message": "Todo deleted successfully"
+              })
+        }else{
+            res.status(401).send({
+                message:"unauthorized access"
+            })
+        }
+    }else{
+        res.status(404).send({
+            message:"task not found",
+        })
+    }
+}
+module.exports = {add,UpdateTodo,deleteTodo}
