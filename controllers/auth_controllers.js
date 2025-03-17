@@ -1,9 +1,10 @@
 const Users = require('../modules/user_module');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require("dotenv").config();
 
 function createToken(id){
-    return jwt.sign({id},"my secret",{
+    return jwt.sign({id},process.env.secretTokenString,{
         expiresIn: 24*60*60
     })
 }
@@ -54,7 +55,7 @@ async function login(req,res){
 function authenMid(req,res,next){
     const token = req.cookies.token;
     if(token){
-        jwt.verify(token,"my secret",(err,decodedToken)=>{
+        jwt.verify(token,process.env.secretTokenString,(err,decodedToken)=>{
             if(err){
                 console.log(err.message);
                 res.status(400).json({"msg":"you must be loged in to enter this page"})
@@ -75,7 +76,7 @@ async function verifyUser(req,res,next){
     if(!token){
         res.status(401).json({"msg":"unauthorized access"});
     }else{
-        jwt.verify(token,"my secret",(err,decodedToken)=>{
+        jwt.verify(token,process.env.secretTokenString,(err,decodedToken)=>{
             if(err){
                 console.log(err.message);
                 res.status(401).json({"msg":"unauthorized access"});
