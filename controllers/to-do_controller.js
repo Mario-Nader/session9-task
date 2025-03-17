@@ -1,7 +1,5 @@
 const Todo = require('../modules/todo_module');
 
-
-
 async function add(req,res){
     try{
         const {title, description, status} = req.body;
@@ -30,6 +28,27 @@ async function add(req,res){
 }
 }
 
+async function UpdateTodo(req,res){
+    const id = req.params.id
+    const task = await Todo.findById(id)
+    if(task){
+        if(task.UserId == req.id){
+            task.status = ! task.status;
+            await task.save();
+            res.status(200).send({
+                "success": true,
+                "message": "Todo status updated successfully"
+              })
+        }else{
+            res.status(401).send({
+                message:"unauthorized access"
+            })
+        }
+    }else{
+        res.status(404).send({
+            message:"task not found",
+        })
+    }
+}
 
-
-module.exports = {add}
+module.exports = {add,UpdateTodo}

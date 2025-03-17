@@ -1,6 +1,5 @@
 const cookieParser = require('cookie-parser');
 const express = require('express');
-const bycrypt = require('bcrypt');
 const app = express();
 const port = 3000;
 const {connectDB} = require('./DB.js');
@@ -17,3 +16,4 @@ app.post('/signup',auth.signup);
 app.post('/signin',auth.login);
 app.post('/signout',auth.logout);
 app.post('/add-todo',auth.authenMid,auth.verifyUser,todo_controller.add)
+app.put('/change-status/:id',auth.authenMid,auth.verifyUser,todo_controller.UpdateTodo)
