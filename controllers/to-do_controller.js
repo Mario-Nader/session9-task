@@ -55,7 +55,6 @@ async function deleteTodo(req,res){
     const id = req.params.id;
     console.log(id)
     const task = await Todo.findById(id)
-    console.log(task)
     if(task){
         if(task.UserId == req.id){
             await Todo.deleteOne({_id: id})
