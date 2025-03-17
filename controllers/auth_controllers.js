@@ -59,7 +59,6 @@ function authenMid(req,res,next){
                 console.log(err.message);
                 res.status(400).json({"msg":"you must be loged in to enter this page"})
             }else{
-                console.log(decodedToken);
                 next()
             }
         })
@@ -73,7 +72,6 @@ function authenMid(req,res,next){
 async function verifyUser(req,res,next){
     token = req.cookies.token;
     let id = 0;
-    console.log(token)
     if(!token){
         res.status(401).json({"msg":"unauthorized access"});
     }else{
