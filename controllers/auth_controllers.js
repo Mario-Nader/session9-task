@@ -82,27 +82,29 @@ async function verifyUser(req,res,next){
                 console.log(err.message);
                 res.status(401).json({"msg":"unauthorized access"});
             }else{
-                console.log(decodedToken)
                  id = decodedToken.id;
             }
         })
     }
-    console.log("before finding by id")
     const user = await Users.findById(id);
     if(!user){
         res.status(404).json({"msg":"user not found"})
     }else{
-        req.user = user;
+        req.id = id;
         next();
     }
 }
 
 function logout(req,res){
+    try{
     res.cookie('token',"",{httpOnly:true, maxAge:1});
     res.status(204).json({
         "success": true,
         "message": "User signed out successfully"
       })
+    }catch(err){
+        console.log(err);
+    }
 }
 // router.post('/signout',)
 

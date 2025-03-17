@@ -5,7 +5,7 @@ todoSchema = mongoose.Schema({
         type:String,
         required:true,
     },
-    describtion:{
+    description:{
         type:String,
         required:true,
     },
@@ -18,4 +18,4 @@ todoSchema = mongoose.Schema({
     }
 });
 
-module.expots = mongoose.model('Todo',todoSchema);
+module.exports = mongoose.model('Todo',todoSchema);
